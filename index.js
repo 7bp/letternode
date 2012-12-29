@@ -1,4 +1,4 @@
-var server = require("./server");
-var router = require("./router");
+var server = require('./server'),
+    api = require('./api');
 
-server.start(router.route);
+server.start(api.api);
