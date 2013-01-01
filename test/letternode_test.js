@@ -22,15 +22,14 @@ var letternode = require('../lib/letternode.js');
     test.ifError(value)
 */
 
-exports['awesome'] = {
+exports['buildUUID'] = {
   setUp: function(done) {
     // setup here
     done();
   },
   'no args': function(test) {
-    test.expect(1);
+    //test.expect(1);
     // tests here
-    test.equal(letternode.awesome(), 'awesome', 'should be awesome.');
     test.done();
   }
 };
