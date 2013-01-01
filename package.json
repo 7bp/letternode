@@ -32,14 +32,16 @@
     "express": "3.0.3",
     "jade": "0.20.0",
     "mongoose": "2.4.8",
-    "socket.io": "0.8.7"
+    "socket.io": "0.8.7",
+    "q": ">=0.8",
+    "eventemitter2": "~0.4.11"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
     "grunt-hustler": "0.7.3",
     "vows": "0.5.x",
-  	"mocha": "*",
-  	"should": "*"
+    "mocha": "*",
+    "should": "*"
   },
   "keywords": []
 }
