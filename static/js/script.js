@@ -23,6 +23,9 @@ $(document).ready(function() {
       if (action === 'gameCreated') {
         game = data.game;
         console.info('Game ID: ' + game.id);
+      } else if (action === 'gameJoined') {
+        game = data.game;
+        console.info('Action: ' + action, game);
       } else {
         console.warn('Unknown action: ' + action);
       }
