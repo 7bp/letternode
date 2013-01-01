@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       app: {
         src: './lib/server.js',
         port: 8000,
-        watch: './lib/letternode.js'
+        watch: './lib/**/*.js'
       }
     }
   });
