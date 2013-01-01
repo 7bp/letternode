@@ -1,0 +1,45 @@
+{
+  "name": "letternode",
+  "description": "The best project ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/7bp/letternode",
+  "author": {
+    "name": "7bp",
+    "email": "bp@7bp.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/7bp/letternode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/7bp/letternode/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/7bp/letternode/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/letternode",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "connect": "1.8.5",
+    "express": "3.0.3",
+    "jade": "0.20.0",
+    "mongoose": "2.4.8",
+    "socket.io": "0.8.7"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17",
+    "grunt-hustler": "0.7.3",
+    "vows": "0.5.x",
+  	"mocha": "*",
+  	"should": "*"
+  },
+  "keywords": []
+}
