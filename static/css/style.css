@@ -15,6 +15,7 @@ body {
 #game {
   width: 250px;
   height: 250px;
+  margin: 100px auto;
 }
 
 #game a {
@@ -47,6 +48,52 @@ body {
 
 #game a:hover {
   box-shadow: inset 0 0 10px #372cb1, 0 0 2px #000;
+}
+
+#playerInfo {
+  width: 500px;
+  margin: 0 auto;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+#playerInfo .player1Name,
+#playerInfo .player2Name {
+  padding-top: 6px;
+}
+
+#playerInfo .player1Name {
+  float: left;
+}
+
+#playerInfo .player2Name {
+  float: right;
+}
+
+#buttons {
+  width: 250px;
+  margin: 0 auto;
+}
+
+#buttons .clear {
+  float: left;
+}
+
+#buttons .submit {
+  float: right;
+}
+
+#buttons button {
+  border: 0;
+  background: rgba(83, 83, 83, 0.8);
+  border-radius: 4px;
+  padding: 7px 8px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#buttons button:hover {
+  background: rgba(83, 83, 83, 1.0);
 }
 
 /* Custom styles for popin & close button */

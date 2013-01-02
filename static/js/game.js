@@ -99,8 +99,8 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.updateUi = function() {
-    $('.player1Name span').text(this.game.player1Name);
-    $('.player2Name span').text(this.game.player2Name);
+    $('.player1Name').text(this.game.player1Name);
+    $('.player2Name').text(this.game.player2Name);
 
     if ($('#game a').length === 0) {
       var i;
@@ -111,6 +111,18 @@ var Letternode = (function() {
         }
         $('#game').append('<a href="#" class="status' + status + '">' + this.game.gameMatrix[i] + '</a>');
       }
+    }
+
+    if ($('#letters a').length > 0) {
+      $('#buttons .clear').stop().fadeIn('fast');
+    } else {
+      $('#buttons .clear').stop().fadeOut('fast');
+    }
+
+    if ($('#letters a').length > 1) {
+      $('#buttons .submit').stop().fadeIn('fast');
+    } else {
+      $('#buttons .submit').stop().fadeOut('fast');
     }
   };
 
