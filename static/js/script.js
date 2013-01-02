@@ -20,19 +20,19 @@ $(document).ready(function() {
   (function() {
     socket.on('gameCreated', function(data) {
       game = data.game;
-      $('#gameId').val(game.id);
+      $('#gameId').val(game.player2);
       console.log(data);
-      console.info('Game ID: ' + game.id);
+      console.info('Game ID: ' + game.id + 'Player 2 ID: ' + game.player2);
     });
     socket.on('playerJoined', function(data) {
       game = data.game;
       console.log(data);
       console.info('Action: ' + 'playerJoined', game);
     });
-    socket.on('playerLeaved', function(data) {
+    socket.on('playerLeft', function(data) {
       game = data.game;
       console.log(data);
-      console.info('Action: ' + 'playerLeaved', game);
+      console.info('Action: ' + 'playerLeft', game);
     });
     socket.on('server_message', function(data) {
       game = data.game;
@@ -48,7 +48,7 @@ $(document).ready(function() {
           socket.emit('createGame', {playerName: $('#playerName').val()});
         },
         joinGame: function() {
-          socket.emit('joinGame', {playerName: $('#playerName').val(), gameId: $('#gameId').val()});
+          socket.emit('joinGame', {playerName: $('#playerName').val(), playerId: $('#gameId').val()});
         }
       };
 
