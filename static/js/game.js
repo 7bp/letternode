@@ -41,6 +41,17 @@ var Letternode = (function() {
   Letternode.prototype.updateUi = function() {
     $('.player1Name span').text(this.game.player1Name);
     $('.player2Name span').text(this.game.player2Name);
+
+    if ($('#game a').length === 0) {
+      var i;
+      for (i = 0; i < this.game.gameMatrix.length; i++) {
+        var status = this.game.stateMatrix[i];
+        if (this.playerNum === 2) {
+          status = Math.abs(status - 4);
+        }
+        $('#game').append('<a href="#" class="status' + status + '">' + this.game.gameMatrix[i] + '</a>');
+      }
+    }
   };
 
   Letternode.prototype.initialize = function() {
