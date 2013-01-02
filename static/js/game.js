@@ -43,6 +43,9 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.pinupPlayer2Url = function(player2Id) {
+    var domain = location.href.split('/')[2];
+    var http = location.href.split('/')[0];
+    var player2Url = http + '//' + domain + '/game/' + player2Id;
     $(document).avgrund({
   		height: 150,
   		openOnEvent: false,
@@ -57,7 +60,7 @@ var Letternode = (function() {
   		'Give the following url to the second player to allow joining this game.' +
   		'<br />' +
   		'<br />' +
-  		'<label for="player2url">URL for Player 2: </label><input type="text" id="player2url" value="http://localhost:8000/game/' + player2Id + '" />' +
+  		'<label for="player2url">URL for Player 2: </label><input type="text" id="player2url" onclick="this.select();" value="' + player2Url + '" />' +
   		'</p>'
   	});
   };
@@ -120,7 +123,7 @@ var Letternode = (function() {
 
   Letternode.prototype.retrieveGameId = function() {
     var urlParts = location.href.split('/');
-    return urlParts[urlParts.length - 1] === 'game' ? false : urlParts[urlParts.length - 1];
+    return urlParts[urlParts.length - 1] === 'game' ? false : urlParts[urlParts.length - 1].replace('#', '');
   };
 
   Letternode.prototype.resumeGame = function() {
