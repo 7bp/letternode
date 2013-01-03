@@ -12,19 +12,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body style="color:white">
 <h1><a href="/game">Create game</a></h1>
 <div><a id="sender">Send a Message</a>
     <ul id="receiver"></ul>
 </div>
 <div>
+    <pre id="stateMatrix" style="height:200px;width:200px;background-color:white;color:black;"></pre>
     <form id="form">
         <fieldset>
             <legend>Message</legend>
-            <label for="action">Action: <input id="action" value="createGame"/></label><br/>
             <label for="playerName">Player Name: <input id="playerName" value="Benjamin"/></label><br/>
             <label for="gameId">Game ID: <input id="gameId"/></label><br/>
-            <button type="submit">Submit</button>
+            <button type="button" id="createGame">Create Game</button>
+            <button type="button" id="joinGame">Join Game</button>
+            <button type="button" id="move">Move</button>
+            <button type="button" id="preMove">PreMove</button>
         </fieldset>
     </form>
 </div>
