@@ -54,6 +54,6 @@ module.exports = function(grunt) {
   
   grunt.registerTask('dev', 'lint test watch');
 
-  grunt.registerTask('travis', 'lint test')
+  grunt.registerTask('travis', 'lint test');
 
 };
