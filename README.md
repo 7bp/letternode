@@ -1,4 +1,4 @@
-# letternode
+# letternode [![Build Status](https://secure.travis-ci.org/7bp/letternode.png?branch=master)](http://travis-ci.org/7bp/letternode)
 
 The best project ever.
 
