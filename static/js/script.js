@@ -18,7 +18,20 @@ $(document).ready(function() {
 
   // Debugging
   (function() {
-    var stateMatrix = $('#stateMatrix'), convertMatrixArrayToPrint = function(input) {
+    var playerList = $('#playerList'), stateMatrix = $('#stateMatrix'), updateGame = function(newGame) {
+      game = newGame;
+      var syncPlayerData = function(elem, playerName, available) {
+        elem.find('strong').text(playerName);
+        elem.find('em').text(available ? 'Yes' : 'No');
+      }
+      if (game) {
+        syncPlayerData(playerList.find('li.player1'), game.player1Name, game.player1Available)
+        syncPlayerData(playerList.find('li.player2'), game.player2Name, game.player2Available)
+      } else {
+        syncPlayerData(playerList.find('li.player1'), 'Player 1', false)
+        syncPlayerData(playerList.find('li.player2'), 'Player 2', false)
+      }
+    }, convertMatrixArrayToPrint = function(input) {
       var result = '';
       for (var i = 0, c = input.length; i < c; i += 5) {
         result += input.slice(i, i + 5).join(' ');
@@ -34,32 +47,32 @@ $(document).ready(function() {
       return result;
     };
     socket.on('gameCreated', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       $('#gameId').val(game.player2);
       console.log(data);
       console.info('Game ID: ' + game.id + 'Player 2 ID: ' + game.player2);
     });
     socket.on('playerJoined', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       console.log(data);
       console.info('Action: ' + 'playerJoined', game);
     });
     socket.on('playerLeft', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       console.log(data);
       console.info('Action: ' + 'playerLeft', game);
     });
     socket.on('server_message', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       console.log(data);
     });
     socket.on('playerPreMoved', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       stateMatrix.text(convertMatrixArrayToPrint(data.stateMatrix));
       console.log('PreMove from this player group: ', data);
     });
     socket.on('playerMoved', function(data) {
-      game = data.game || {};
+      updateGame(data.game || {});
       stateMatrix.text(convertMatrixArrayToPrint(data.stateMatrix));
       console.log('Move from any player: ', data);
     });
