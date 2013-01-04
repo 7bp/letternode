@@ -25,3 +25,11 @@ _(Nothing yet)_
 ## License
 Copyright (c) 2012 7bp  
 Licensed under the MIT license.
+
+## Further Information For Dictionaries
+EOWL)
+The English Open Word List (EOWL) is taken from http://dreamsteep.com/projects/the-english-open-word-list.html
+It is based but almost entirely derived from the UK Advanced Cryptics Dictionary (UKACD) Version 1.6, by J Ross Beresford (http://cfaj.freeshell.org/wordfinder/UKACD17.shtml).
+UK Advanced Cryptics Dictionary Licensing Information: Copyright (c) J Ross Beresford 1993-1999. All Rights Reserved. The following restriction is placed on the use of this publication: if the UK Advanced Cryptics Dictionary is used in a software package or redistributed in any form, the copyright notice must be prominently displayed and the text of this document must be included verbatim.
+LETTERPRESS)
+Futhermore you may use the LetterPress original dictionaries as well. Simple fetch the files from the app-file and place them into the lib/dictionary/letterpress folder.
