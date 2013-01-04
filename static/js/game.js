@@ -107,6 +107,7 @@ var Letternode = (function() {
         }
         $('#game').append('<a href="#" class="status' + status + '">' + this.game.gameMatrix[i] + '</a>');
       }
+      this.bindGameEvents();
     }
 
     if ($('#letters a').length > 0) {
@@ -155,6 +156,13 @@ var Letternode = (function() {
     } else {
       this.socket.emit('joinGame', {playerId: playerId});
     }
+  };
+
+  Letternode.prototype.bindGameEvents = function() {
+    $('#game a').bind('click touchstart').click(function(event) {
+      event.preventDefault();
+      alert($(this).text() + ' tapped');
+    });
   };
 
   return Letternode;
