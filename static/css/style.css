@@ -15,10 +15,17 @@ body {
 #game {
   width: 250px;
   height: 250px;
-  margin: 100px auto;
+  margin: 25px auto;
 }
 
-#game a {
+#word {
+  margin: 45px auto 0;
+  height: 50px;
+  overflow: hidden;
+}
+
+#game a,
+#word a {
   display: block;
   text-align: center;
   width: 50px;
@@ -30,24 +37,33 @@ body {
   color: #333;
 }
 
-#game a.status0 {
+#game a.status0,
+#word a.status0 {
   background: #df7e7e;
 }
 
-#game a.status1 {
+#game a.status1,
+#word a.status1 {
   background: #cea5a5;
 }
 
-#game a.status3 {
+#game a.status3,
+#word a.status3 {
   background: #b1b1d4;
 }
 
-#game a.status4 {
+#game a.status4,
+#word a.status4 {
   background: #6262d1;
 }
 
-#game a:hover {
+#game a:hover,
+#word a:hover {
   box-shadow: inset 0 0 10px #372cb1, 0 0 2px #000;
+}
+
+#game a.selected {
+  opacity: 0.3;
 }
 
 #playerInfo {

@@ -77,6 +77,10 @@ var Letternode = (function() {
       me.createGame()
       console.info('Action: ' + 'createGameRequired');
     });
+    this.socket.on('playerPreMoved', function(data) {
+      me.checkPreMove(data.positions);
+      console.info('Action: ' + 'playerPreMoved', data);
+    });
   };
 
   Letternode.prototype.checkPlayers = function() {
@@ -110,13 +114,13 @@ var Letternode = (function() {
       this.bindGameEvents();
     }
 
-    if ($('#letters a').length > 0) {
+    if ($('#word a').length > 0) {
       $('#buttons .clear').stop().fadeIn('fast');
     } else {
       $('#buttons .clear').stop().fadeOut('fast');
     }
 
-    if ($('#letters a').length > 1) {
+    if ($('#word a').length > 1) {
       $('#buttons .submit').stop().fadeIn('fast');
     } else {
       $('#buttons .submit').stop().fadeOut('fast');
@@ -158,11 +162,95 @@ var Letternode = (function() {
     }
   };
 
+  Letternode.prototype.selectLetter = function(position) {
+    var me = this;
+    var clonedLetter = $('#game a').eq(position).clone();
+    $(clonedLetter)
+      .attr('data-position', position)
+      .hammer()
+      .unbind('tap').bind('tap', function(event) {
+        // deselect
+        event.preventDefault();
+        var position = $(this).attr('data-position');
+        me.deselectLetter(this);
+        $('#game a').eq(position).removeClass('selected');
+      });
+    $('#word').stop().animate({ width: 50 * ($('#word a').length + 1) }, 'fast', function() {
+      $('#word').append(clonedLetter);
+      me.preMove();
+    });
+    this.updateUi();
+  };
+
+  Letternode.prototype.deselectLetter = function(letter) {
+    $(letter).remove();
+    $('#word').stop().animate({ width: 50 * $('#word a').length });
+    this.preMove();
+    this.updateUi();
+  };
+
   Letternode.prototype.bindGameEvents = function() {
+    var me = this;
+    // select letter for word
     $('#game a').hammer().bind('tap', function(event) {
       event.preventDefault();
-      alert($(this).text() + ' tapped');
+      if (!$(this).hasClass('selected')) {
+        $(this).addClass('selected');
+        me.selectLetter($(this).index('#game a'));
+      }
     });
+    $('#buttons .clear').hammer().bind('tap', function(event) {
+      $('#word a').trigger('tap');
+    });
+  };
+
+  Letternode.prototype.selectedWord = function() {
+    var result = [];
+    $('#word a').each(function() {
+      result.push($(this).attr('data-position'));
+    });
+    return result;
+  };
+
+  Letternode.prototype.translateWordPositions = function(positions) {
+    var result = '';
+    $.each(positions, function(i) {
+      result += $('#game a').eq(i).text();
+    });
+    return result;
+  };
+
+  Letternode.prototype.checkPreMove = function(positions) {
+    var me = this;
+    if (this.selectedWord() != positions) {
+      $('#word a').remove();
+      $('#game a').removeClass('selected');
+      $.each(positions, function(key) {
+        var clonedLetter = $('#game a').eq(this).clone();
+        $('#game a').eq(this).addClass('selected');
+        $(clonedLetter)
+          .attr('data-position', this)
+          .hammer()
+          .unbind('tap').bind('tap', function(event) {
+            // deselect
+            event.preventDefault();
+            var position = $(this).attr('data-position');
+            me.deselectLetter(this);
+            $('#game a').eq(position).removeClass('selected');
+          });
+        $('#word').css({ width: 50 * ($('#word a').length + 1) });
+        $('#word').append(clonedLetter);
+      });
+      this.updateUi();
+    }
+  };
+
+  Letternode.prototype.preMove = function() {
+    this.socket.emit('preMove', {gameId: this.game.id, positions: this.selectedWord()});
+  };
+
+  Letternode.prototype.move = function() {
+    this.socket.emit('move', {gameId: this.game.id, word: this.selectedWord()});
   };
 
   return Letternode;
