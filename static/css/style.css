@@ -7,6 +7,18 @@ body {
   padding: 0;
 }
 
+.fader {
+  position: absolute;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  line-height: 30px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  background: #efefef;
+}
+
 #app {
   background: #fff;
   padding: 20px;
@@ -35,6 +47,7 @@ body {
   float: left;
   text-decoration: none;
   color: #333;
+  background: #efefef;
 }
 
 #game a.status0,

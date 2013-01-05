@@ -28,7 +28,7 @@ var Letternode = (function() {
       $('body').unbind('keyup').unbind('click').removeClass('avgrund-active');
       me.joinGame(me.retrieveGameId(), $('#playername').val());
     });
-  };    
+  };
 
   Letternode.prototype.pinupPlayer2Url = function(player2Id) {
     var domain = location.href.split('/')[2];
@@ -177,16 +177,23 @@ var Letternode = (function() {
       });
     $('#word').stop().animate({ width: 50 * ($('#word a').length + 1) }, 'fast', function() {
       $('#word').append(clonedLetter);
+      me.fader($('#game a').eq(position), clonedLetter);
       me.preMove();
     });
     this.updateUi();
   };
 
   Letternode.prototype.deselectLetter = function(letter) {
-    $(letter).remove();
-    $('#word').stop().animate({ width: 50 * $('#word a').length });
-    this.preMove();
-    this.updateUi();
+    var me = this;
+    $(letter).transition({
+      opacity: 0,
+      scale: 1.6
+    }, 200, function() {
+      $(letter).remove();
+      $('#word').stop().animate({ width: 50 * $('#word a').length });
+      me.preMove();
+      me.updateUi();
+    });
   };
 
   Letternode.prototype.bindGameEvents = function() {
@@ -201,6 +208,9 @@ var Letternode = (function() {
     });
     $('#buttons .clear').hammer().bind('tap', function(event) {
       $('#word a').trigger('tap');
+    });
+    $('#buttons .submit').hammer().bind('tap', function(event) {
+      me.move();
     });
   };
 
@@ -218,6 +228,48 @@ var Letternode = (function() {
       result += $('#game a').eq(i).text();
     });
     return result;
+  };
+
+  /**
+  * Shakes UI element(s) e.g. when move is declined on server side
+  */
+  Letternode.prototype.shake = function(elements) {
+    $(elements)
+      .transition({ rotate: '2deg', x: -2 }, 50)
+      .transition({ rotate: '-2deg', x: 2 }, 50)
+      .transition({ rotate: '2deg', x: -2 }, 50)
+      .transition({ rotate: '-2deg', x: 2 }, 50)
+      .transition({ rotate: '0deg', x: 0 }, 50);
+  };
+
+  /**
+  * Animates a shader to move from origin position to target position e.g. when selecting a letter
+  */
+  Letternode.prototype.fader = function(origin, target) {
+    var fader = $('<a>');
+    fader
+      .appendTo('body')
+      .attr('class', $(origin).attr('class'))
+      .addClass('fader')
+      .text($(origin).text());
+    $(target).css({ opacity: 0 });
+    // todo colorize with status class like origin
+    fader
+      .css({
+        left: $(origin).offset().left,
+        top: $(origin).offset().top,
+        width: $(origin).css('width'),
+        height: $(origin).css('height')
+      })
+      .transition({
+        left: $(target).offset().left,
+        top: $(target).offset().top,
+        width: $(target).css('width'),
+        height: $(target).css('height'),
+      }, function() {
+        $(target).css({ opacity: 1.0 });
+        $(fader).remove();
+      });
   };
 
   Letternode.prototype.checkPreMove = function(positions) {
@@ -250,6 +302,7 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.move = function() {
+    this.shake('#word, #buttons .submit');
     this.socket.emit('move', {gameId: this.game.id, word: this.selectedWord()});
   };
 
