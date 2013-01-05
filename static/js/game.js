@@ -23,9 +23,9 @@ var Letternode = (function() {
     });
 
     var me = this;
-    $('#joingame').click(function(event) {
+    $('#joingame').hammer().bind('tap', function(event) {
       event.preventDefault();
-      $('body').unbind('keyup').unbind('click').removeClass('avgrund-active');
+      $('body').removeClass('avgrund-active');
       me.joinGame(me.retrieveGameId(), $('#playername').val());
     });
   };
@@ -49,6 +49,10 @@ var Letternode = (function() {
   		'<label for="player2url">URL for Player 2: </label><input type="text" id="player2url" onclick="this.select();" value="' + player2Url + '" />' +
   		'</p>'
   	});
+  };
+
+  Letternode.prototype.info = function(message) {
+    alert(message);
   };
 
   Letternode.prototype.socketBinds = function() {
@@ -87,6 +91,17 @@ var Letternode = (function() {
     });
     this.socket.on('playerMoveDeclined', function(data) {
       me.shake('#buttons .submit, #word');
+      switch (data.failureType) {
+        case 'invalid_move':
+          me.info('It is not your turn!');
+          break;
+        case 'word_already_played':
+          me.info('The word has already been played or is a prefix of an already played word.');
+          break;
+        case 'word_invalid':
+          me.info('The word is invalid.');
+          break;
+      }
       console.info('Action: ' + 'playerMoveDeclined');
     });
   };
@@ -324,9 +339,10 @@ var Letternode = (function() {
   Letternode.prototype.gameUpdate = function(data) {
     var game = data.game;
     this.game = game;
-    if (data.lastPlayer === this.playerNum) {
+    if (data.playerNum === this.playerNum) {
       this.clearSelectedLetters();
     }
+    console.info(data.playerNum + "=" + this.playerNum);
     var i;
     for (i = 0; i < 25; i++) {
       $('#game a').eq(i)
