@@ -211,7 +211,16 @@ var Letternode = (function() {
       }
     });
     $('#buttons .clear').hammer().bind('tap', function(event) {
-      $('#word a').trigger('tap');
+      $('#word a').transition({
+        opacity: 0,
+        scale: 1.6
+      }, 200, function() {
+        $('#word a').remove();
+        $('#word').stop().animate({ width: 0 });
+        $('#game a').removeClass('selected');
+        me.preMove();
+        me.updateUi();
+      });
     });
     $('#buttons .submit').hammer().bind('tap', function(event) {
       me.move();
