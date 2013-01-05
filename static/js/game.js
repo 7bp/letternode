@@ -215,20 +215,27 @@ var Letternode = (function() {
       }
     });
     $('#buttons .clear').hammer().bind('tap', function(event) {
-      $('#word a').transition({
-        opacity: 0,
-        scale: 1.6
-      }, 200, function() {
-        $('#word a').remove();
-        $('#word').stop().animate({ width: 0 });
-        $('#game a').removeClass('selected');
-        me.preMove();
-        me.updateUi();
-      });
+      me.thisClearSelectedLetters();
     });
     $('#buttons .submit').hammer().bind('tap', function(event) {
       me.move();
     });
+  };
+
+  Letternode.prototype.clearSelectedLetters = function() {
+    var me = this;
+    $('#word a').transition({
+      opacity: 0,
+      scale: 1.6
+    }, 200, function() {
+      $('#word a').remove();
+      $('#word').stop().animate({ width: 0 });
+      $('#game a').removeClass('selected');
+    });
+    setTimeout(function() {
+      me.preMove();
+      me.updateUi();
+    }, 250);
   };
 
   Letternode.prototype.selectedWord = function() {
@@ -314,10 +321,11 @@ var Letternode = (function() {
     }
   };
 
-  Letternode.prototype.gameUpdate = function(game) {
+  Letternode.prototype.gameUpdate = function(data) {
+    var game = data.game;
     this.game = game;
-    if (game.lastPlayer === this.playerNum) {
-      $('#submit .clear').trigger('tap');
+    if (data.lastPlayer === this.playerNum) {
+      this.clearSelectedLetters();
     }
     var i;
     for (i = 0; i < 25; i++) {
