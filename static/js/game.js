@@ -81,6 +81,10 @@ var Letternode = (function() {
       me.checkPreMove(data.positions);
       console.info('Action: ' + 'playerPreMoved', data);
     });
+    this.socket.on('playerMoveDeclined', function(data) {
+      me.shake('#buttons .submit, #word');
+      console.info('Action: ' + 'playerMoveDeclined');
+    });
   };
 
   Letternode.prototype.checkPlayers = function() {
@@ -302,7 +306,6 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.move = function() {
-    this.shake('#word, #buttons .submit');
     this.socket.emit('move', {gameId: this.game.id, word: this.selectedWord()});
   };
 
