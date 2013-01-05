@@ -77,6 +77,10 @@ var Letternode = (function() {
       me.createGame()
       console.info('Action: ' + 'createGameRequired');
     });
+    this.socket.on('playerMoved', function(data) {
+      me.gameUpdate(data);
+      console.info('Action: ' + 'playerMoved', data);
+    });
     this.socket.on('playerPreMoved', function(data) {
       me.checkPreMove(data.positions);
       console.info('Action: ' + 'playerPreMoved', data);
@@ -310,12 +314,37 @@ var Letternode = (function() {
     }
   };
 
+  Letternode.prototype.gameUpdate = function(game) {
+    this.game = game;
+    if (game.lastPlayer === this.playerNum) {
+      $('#submit .clear').trigger('tap');
+    }
+    var i;
+    for (i = 0; i < 25; i++) {
+      $('#game a').eq(i)
+        .removeClass('status0')
+        .removeClass('status1')
+        .removeClass('status2')
+        .removeClass('status3')
+        .removeClass('status4')
+        .addClass('status' + game.stateMatrix[i]);
+      $('#word a[data-position="' + i + '"]')
+        .removeClass('status0')
+        .removeClass('status1')
+        .removeClass('status2')
+        .removeClass('status3')
+        .removeClass('status4')
+        .addClass('status' + game.stateMatrix[i]);
+    }
+    // further game matrix updates required
+  };
+
   Letternode.prototype.preMove = function() {
     this.socket.emit('preMove', {gameId: this.game.id, positions: this.selectedWord()});
   };
 
   Letternode.prototype.move = function() {
-    this.socket.emit('move', {gameId: this.game.id, word: this.selectedWord()});
+    this.socket.emit('move', {gameId: this.game.id, positions: this.selectedWord()});
   };
 
   return Letternode;
