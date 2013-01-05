@@ -159,7 +159,7 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.bindGameEvents = function() {
-    $('#game a').bind('click touchstart').click(function(event) {
+    $('#game a').hammer().bind('tap', function(event) {
       event.preventDefault();
       alert($(this).text() + ' tapped');
     });
