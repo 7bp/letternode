@@ -230,7 +230,7 @@ var Letternode = (function() {
       }
     });
     $('#buttons .clear').hammer().bind('tap', function(event) {
-      me.thisClearSelectedLetters();
+      me.clearSelectedLetters();
     });
     $('#buttons .submit').hammer().bind('tap', function(event) {
       me.move();
