@@ -7,6 +7,41 @@ var Letternode = (function() {
     this.playerName = false;
   }
 
+    Letternode.prototype.initialize = function() {
+    this.socketBinds();
+    // detect whether a game must be created or resumed
+    if (!this.resumeGame()) {
+      this.createGame();
+    }
+  };
+
+  Letternode.prototype.retrieveGameId = function() {
+    var urlParts = location.href.split('/');
+    return urlParts[urlParts.length - 1] === 'game' ? false : urlParts[urlParts.length - 1].replace('#', '');
+  };
+
+  Letternode.prototype.resumeGame = function() {
+    var gameId = this.retrieveGameId();
+    console.info('GameID found: ' + gameId);
+    if (gameId) {
+      this.joinGame(gameId);
+      return true;
+    }
+    return false;
+  };
+
+  Letternode.prototype.createGame = function() {
+    this.socket.emit('createGame');
+  };
+
+  Letternode.prototype.joinGame = function(playerId, playerName) {
+    if (typeof playerName != 'undefined') {
+      this.socket.emit('joinGame', {playerName: playerName, playerId: playerId});
+    } else {
+      this.socket.emit('joinGame', {playerId: playerId});
+    }
+  };
+
   Letternode.prototype.pinupPromptPlayerName = function() {
     $(document).avgrund({
       height: 140,
@@ -58,52 +93,25 @@ var Letternode = (function() {
   Letternode.prototype.socketBinds = function() {
     var me = this;
     this.socket.on('gameCreated', function(data) {
-      me.game = data.game;
-      me.playerNum = data.playerNum;
-      history.pushState({gameId: me.game.id}, 'Game [' + me.game.id + '/' + me.game.player1 + ']', '/game/' + me.game.player1);
-      me.checkPlayers();
-      console.info('Game ID: ' + me.game.id);
-      me.updateUi();
+      events.onGameCreated.call(me, data);
     });
     this.socket.on('playerJoined', function(data) {
-      me.game = data.game;
-      me.playerNum = data.playerNum;
-      me.checkPlayers();
-      console.info('Action: ' + 'playerJoined', data);
-      me.updateUi();
+      events.onPlayerJoined.call(me, data);
     });
     this.socket.on('playerLeft', function(data) {
-      me.game = data.game;
-      console.info('Action: ' + 'playerLeft', me.game);
-      me.updateUi();
+      events.onPlayerLeft.call(me, data);
     });
     this.socket.on('createGameRequired', function(data) {
-      me.createGame()
-      console.info('Action: ' + 'createGameRequired');
+      events.onCreateGameRequired.call(me, data);
     });
     this.socket.on('playerMoved', function(data) {
-      me.gameUpdate(data);
-      me.updateUi();
-      console.info('Action: ' + 'playerMoved', data);
+      events.onPlayerMoved.call(me, data);
     });
     this.socket.on('playerPreMoved', function(data) {
-      me.checkPreMove(data.positions);
-      console.info('Action: ' + 'playerPreMoved', data);
+      events.onPlayerPreMoved.call(me, data);
     });
     this.socket.on('playerMoveDeclined', function(data) {
-      me.shake('#buttons .submit, #word');
-      switch (data.failureType) {
-        case 'invalid_move':
-          me.info('It is not your turn!');
-          break;
-        case 'word_already_played':
-          me.info('The word has already been played or is a prefix of an already played word.');
-          break;
-        case 'word_invalid':
-          me.info('The word is invalid.');
-          break;
-      }
-      console.info('Action: ' + 'playerMoveDeclined');
+      events.onPlayerMoveDeclined.call(me, data);
     });
   };
 
@@ -176,41 +184,6 @@ var Letternode = (function() {
       $('#buttons .submit').stop().fadeIn('fast');
     } else {
       $('#buttons .submit').stop().fadeOut('fast');
-    }
-  };
-
-  Letternode.prototype.initialize = function() {
-    this.socketBinds();
-    // detect whether a game must be created or resumed
-    if (!this.resumeGame()) {
-      this.createGame();
-    }
-  };
-
-  Letternode.prototype.retrieveGameId = function() {
-    var urlParts = location.href.split('/');
-    return urlParts[urlParts.length - 1] === 'game' ? false : urlParts[urlParts.length - 1].replace('#', '');
-  };
-
-  Letternode.prototype.resumeGame = function() {
-    var gameId = this.retrieveGameId();
-    console.info('GameID found: ' + gameId);
-    if (gameId) {
-      this.joinGame(gameId);
-      return true;
-    }
-    return false;
-  };
-
-  Letternode.prototype.createGame = function() {
-    this.socket.emit('createGame');
-  };
-
-  Letternode.prototype.joinGame = function(playerId, playerName) {
-    if (typeof playerName != 'undefined') {
-      this.socket.emit('joinGame', {playerName: playerName, playerId: playerId});
-    } else {
-      this.socket.emit('joinGame', {playerId: playerId});
     }
   };
 
@@ -365,20 +338,75 @@ var Letternode = (function() {
     }
   };
 
-  Letternode.prototype.gameUpdate = function(data) {
-    var game = data.game;
-    this.game = game;
-    if (data.playerNum === this.playerNum) {
-      this.clearSelectedLetters();
-    }
-  };
-
   Letternode.prototype.preMove = function() {
     this.socket.emit('preMove', {gameId: this.game.id, positions: this.selectedWord()});
   };
 
   Letternode.prototype.move = function() {
     this.socket.emit('move', {gameId: this.game.id, positions: this.selectedWord()});
+  };
+
+   var events = {
+    onGameCreated: function(data) {
+      this.game = data.game;
+      this.playerNum = data.playerNum;
+      history.pushState({gameId: this.game.id}, 'Game [' + this.game.id + '/' + this.game.player1 + ']', '/game/' + this.game.player1);
+      this.checkPlayers();
+      this.updateUi();
+      console.info('Action: gameCreated', data);
+    },
+    onPlayerJoined: function(data) {
+      this.game = data.game;
+      this.playerNum = data.playerNum;
+      this.checkPlayers();
+      this.updateUi();
+      console.info('Action: playerJoined', data);
+    },
+    onPlayerLeft: function(data) {
+      this.game = data.game;
+      this.updateUi();
+      console.info('Action: playerLeft', data);
+    },
+    onCreateGameRequired: function(data) {
+      this.createGame()
+      console.info('Action: createGameRequired');
+    },
+    onPlayerMoved: function(data) {
+      this.game = data.game;
+      if (data.playerNum === this.playerNum) {
+        this.clearSelectedLetters();
+      }
+      this.updateUi();
+      if (data.game.state === 'FINISHED') {
+        var winnerName = 'Nobody';
+        if (data.game.player1Score > data.game.player2Score) {
+          winnerName = data.game.player1Name;
+        } else if (data.game.player2Score > data.game.player1Score) {
+          winnerName = data.game.player2Name;
+        }
+        this.info('Game Over! Score is ' + data.game.player1Score + ' vs ' + data.game.player2Score + '. ' + winnerName + ' has won the game!');
+      }
+      console.info('Action: playerMoved', data);
+    },
+    onPlayerPreMoved: function(data) {
+      this.checkPreMove(data.positions);
+      console.info('Action: playerPreMoved', data);
+    },
+    onPlayerMoveDeclined: function(data) {
+      this.shake('#buttons .submit, #word');
+      switch (data.failureType) {
+        case 'invalid_move':
+          this.info('It is not your turn!');
+          break;
+        case 'word_already_played':
+          this.info('The word has already been played or is a prefix of an already played word.');
+          break;
+        case 'word_invalid':
+          this.info('The word is invalid.');
+          break;
+      }
+      console.info('Action: playerMoveDeclined');
+    }
   };
 
   return Letternode;
