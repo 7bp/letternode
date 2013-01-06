@@ -39,5 +39,29 @@ exports['Helper.Util'] = {
     test.equal(uuid.length, 9, 'The generated uuid has not the correct length: ' + uuid);
     test.expect(1);
     test.done();
+  },
+  'checkSearchDoesNotExistInWords: Search word exists in list.': function(test) {
+    var result = Util.checkSearchDoesNotExistInWords('fun', ['fun']);
+    test.equal(result, false, 'Word fun is not allowed.');
+    test.expect(1);
+    test.done();
+  },
+  'checkSearchDoesNotExistInWords: Longer variant of search word exists in list.': function(test) {
+    var result = Util.checkSearchDoesNotExistInWords('fun', ['funny']);
+    test.equal(result, false, 'Word fun is not allowed.');
+    test.expect(1);
+    test.done();
+  },
+  'checkSearchDoesNotExistInWords: Shorter variant of search word exists in list.': function(test) {
+    var result = Util.checkSearchDoesNotExistInWords('funny', ['fun']);
+    test.equal(result, true, 'Word funny is allowed.');
+    test.expect(1);
+    test.done();
+  },
+  'checkSearchDoesNotExistInWords: Search word does not exist in list.': function(test) {
+    var result = Util.checkSearchDoesNotExistInWords('alpine', ['fun']);
+    test.equal(result, true, 'Word alpine is allowed.');
+    test.expect(1);
+    test.done();
   }
 };
