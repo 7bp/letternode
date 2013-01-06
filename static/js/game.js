@@ -142,6 +142,14 @@ var Letternode = (function() {
       $('.player2Score').text(this.game.player2Score);
     }
 
+    $('#player1Words li, #player2Words li').remove();
+    for (var i = this.game.player1Words.length - 1, c = 0; i >= c; i--) {
+      $('#player1Words').append('<li>'+this.game.player1Words[i]+'</li>');
+    }
+    for (var i = this.game.player2Words.length - 1, c = 0; i >= c; i--) {
+      $('#player2Words').append('<li>'+this.game.player2Words[i]+'</li>');
+    }
+
     if ($('#game a').length === 0) {
       var i;
       for (i = 0; i < this.game.gameMatrix.length; i++) {

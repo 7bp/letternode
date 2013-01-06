@@ -22,6 +22,7 @@ body {
 #app {
   background: #fff;
   padding: 20px;
+  min-height: 100%;
 }
 
 #game {
@@ -187,6 +188,39 @@ body {
 
 #buttons button:hover {
   background: rgba(83, 83, 83, 1.0);
+}
+
+#player1Words,
+#player2Words {
+  position:absolute;
+  width: 100px;
+  top: 166px;
+  left: 50%;
+  list-style: none;
+  color: #777;
+  padding: 0;
+  margin: 0;
+}
+
+#player1Words li,
+#player2Words li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#player1Words li:first-child,
+#player2Words li:first-child {
+  font-weight: 600;
+}
+
+#player1Words {
+  margin-left: -245px;
+  text-align: right;
+}
+
+#player2Words {
+  margin-left: 145px;
 }
 
 /* Custom styles for popin & close button */
