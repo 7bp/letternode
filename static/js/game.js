@@ -124,6 +124,12 @@ var Letternode = (function() {
     if (this.game.player2Name) {
       $('.player2Name').text(this.game.player2Name);
     }
+    if (this.game.player1Score) {
+      $('.player1Score').text(this.game.player1Score);
+    }
+    if (this.game.player2Score) {
+      $('.player2Score').text(this.game.player2Score);
+    }
 
     if ($('#game a').length === 0) {
       var i;

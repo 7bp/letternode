@@ -99,6 +99,25 @@ body {
   float: right;
 }
 
+#playerInfo .player1Score,
+#playerInfo .player2Score {
+  position: relative;
+  top: -4px;
+  font-size: 2em;
+  font-weight: bold;
+  color: #555;
+}
+
+#playerInfo .player1Score {
+  float: left;
+  margin-left: 10px;
+}
+
+#playerInfo .player2Score {
+  float: right;
+  margin-right: 10px;
+}
+
 #buttons {
   width: 250px;
   margin: 0 auto;
