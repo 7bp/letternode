@@ -382,7 +382,7 @@ var Letternode = (function() {
     },
     onPlayerLeft: function(data) {
       this.game = data.game;
-      setTimeout(this.updateUi(), 100);
+      this.updateUi();
       console.info('Action: playerLeft', data);
     },
     onCreateGameRequired: function(data) {
