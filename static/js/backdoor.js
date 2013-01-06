@@ -51,10 +51,10 @@ var Backdoor = (function($) {
     }
 
     gameElement.find('.player1 .id').text(game.player1);
-    gameElement.find('.player1 .name').text(game.player1Name);
+    gameElement.find('.player1 .name').text(game.player1Name + ' (' + game.player1Addresses.length + ')').attr('title', 'Addresses: ' + game.player1Addresses.join(', '));
     gameElement.find('.player1 .score').text(game.player1Score);
     gameElement.find('.player2 .id').text(game.player2);
-    gameElement.find('.player2 .name').text(game.player2Name);
+    gameElement.find('.player2 .name').text(game.player2Name + ' (' + game.player2Addresses.length + ')').attr('title', 'Addresses: ' + game.player2Addresses.join(', '));
     gameElement.find('.player2 .score').text(game.player2Score);
     gameElement.find('.lastChange').text(game.updatedAsAgo).attr('title', new Date(game.updated).toString());
 
