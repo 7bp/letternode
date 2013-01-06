@@ -59,7 +59,7 @@ var Letternode = (function() {
     var http = location.href.split('/')[0];
     var player2Url = http + '//' + domain + '/game/' + player2Id;
     var additionalOption = '';
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) {
       additionalOption = '<a href="sms:?body=' + escape(player2Url) + '">SMS/Message</a> | ';
     }
     var message = 'Give the following url to the second player to allow joining this game:<br />' +
