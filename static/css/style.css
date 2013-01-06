@@ -79,24 +79,65 @@ body {
   opacity: 0.3;
 }
 
+#gameMessage,
 #playerInfo {
-  width: 500px;
+  width: 540px;
   margin: 0 auto;
   font-size: 0.9em;
   font-weight: 600;
 }
 
+#gameMessage {
+  height: 30px;
+  overflow: hidden;
+  text-align: center;
+  color: #777;
+}
+
 #playerInfo .player1Name,
 #playerInfo .player2Name {
-  padding-top: 6px;
+  padding: 5px;
+  width: 90px;
+  overflow: hidden;
+}
+
+#playerInfo span {
+  float: left;
+  display: block;
+}
+
+#playerInfo .status {
+  width: 10px;
+  font-weight: bold;
+  font-size: 1.5em;
+  position: relative;
+  top: -6px;
+}
+
+#playerInfo .status.available0 {
+  color: #f00;
+}
+
+#playerInfo .status.available1 {
+  color: #006f05;
+}
+
+#playerInfo .name {
+  width: 80px;
+  overflow: hidden;
 }
 
 #playerInfo .player1Name {
   float: left;
+  text-align: right;
 }
 
 #playerInfo .player2Name {
   float: right;
+}
+
+#playerInfo .player2Name .status {
+  text-align: right;
 }
 
 #playerInfo .player1Score,

@@ -87,7 +87,7 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.info = function(message) {
-    alert(message);
+    $('#gameMessage').text(message);
   };
 
   Letternode.prototype.socketBinds = function() {
@@ -128,10 +128,12 @@ var Letternode = (function() {
 
   Letternode.prototype.updateUi = function() {
     if (this.game.player1Name) {
-      $('.player1Name').text(this.game.player1Name);
+      $('.player1Name .name').text(this.game.player1Name);
+      $('.player1Name .status').addClass('available' + (this.game.player1Available ? '1' : '0'));
     }
     if (this.game.player2Name) {
-      $('.player2Name').text(this.game.player2Name);
+      $('.player2Name .status').addClass('available' + (this.game.player2Available ? '1' : '0'));
+      $('.player2Name .name').text(this.game.player2Name);
     }
     if (this.game.player1Score) {
       $('.player1Score').text(this.game.player1Score);
@@ -370,13 +372,17 @@ var Letternode = (function() {
     onPlayerJoined: function(data) {
       this.game = data.game;
       this.playerNum = data.playerNum;
+      if (this.game.activePlayer === this.playerNum) {
+        $('#gameMessage').text('It\'s your turn!');
+      }
+      this.winnerCheck();
       this.checkPlayers();
       this.updateUi();
       console.info('Action: playerJoined', data);
     },
     onPlayerLeft: function(data) {
       this.game = data.game;
-      this.updateUi();
+      setTimeout(this.updateUi(), 100);
       console.info('Action: playerLeft', data);
     },
     onCreateGameRequired: function(data) {
@@ -387,6 +393,9 @@ var Letternode = (function() {
       this.game = data.game;
       if (data.playerNum === this.playerNum) {
         this.clearSelectedLetters();
+        $('#gameMessage').text('');
+      } else {
+        $('#gameMessage').text('It\'s your turn!');
       }
       this.updateUi();
       this.winnerCheck();
@@ -400,7 +409,7 @@ var Letternode = (function() {
       this.shake('#buttons .submit, #word');
       switch (data.failureType) {
         case 'invalid_move':
-          this.info('It is not your turn!');
+          this.info('It\'s not your turn!');
           break;
         case 'word_already_played':
           this.info('The word has already been played or is a prefix of an already played word.');
