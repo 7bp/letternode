@@ -62,8 +62,13 @@ var Backdoor = (function($) {
     for (i = 0; i < 25; i++) {
       var idxCls = 'idx-' + i, state = game.stateMatrix[i];
       var $cell = gameMatrix.find('.' + idxCls);
-      $cell.removeClass('state-0').removeClass('state-1').removeClass('state-2');
-      $cell.addClass('state-' + state);
+      $cell
+        .removeClass('status0')
+        .removeClass('status1')
+        .removeClass('status2')
+        .removeClass('status3')
+        .removeClass('status4')
+        .addClass('status' + state);
     }
 
     gameMatrix.find('.cell').removeClass('selected');
