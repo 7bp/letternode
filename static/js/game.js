@@ -135,6 +135,21 @@ var Letternode = (function() {
         $('#game').append('<a href="#" class="status' + status + '">' + this.game.gameMatrix[i] + '</a>');
       }
       this.bindGameEvents();
+    } else {
+      var i;
+      for (i = 0; i < this.game.gameMatrix.length; i++) {
+        var status = this.game.stateMatrix[i];
+        if (this.playerNum === 2) {
+          status = Math.abs(status - 4);
+        }
+        $('#game a').eq(i)
+          .removeClass('status0')
+          .removeClass('status1')
+          .removeClass('status2')
+          .removeClass('status3')
+          .removeClass('status4')
+          .addClass('status' + status);
+      }
     }
 
     if ($('#word a').length > 0) {
