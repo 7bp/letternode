@@ -22,8 +22,7 @@ var Letternode = (function() {
 
   Letternode.prototype.resumeGame = function() {
     var gameId = this.retrieveGameId();
-    console.info('GameID found: ' + gameId);
-    if (gameId) {
+    if (gameId && gameId != '') {
       this.joinGame(gameId);
       return true;
     }
@@ -43,22 +42,12 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.pinupPromptPlayerName = function() {
-    $(document).avgrund({
-      height: 140,
-      openOnEvent: false,
-      holderClass: 'avgrundCustom',
-      showClose: false,
-      enableStackAnimation: true,
-      onBlurContainer: '#app',
-      closeByEscape: false,
-      closeByDocument: false,
-      template: '<p><label for="playername">Player name: </label><input type="text" id="playername" value="Anonymous" />' +
-      '<br />' +
-      '<a href="" target="_blank" class="startGame" id="joingame">Continue</a></p>'
-    });
+    var message = '<label for="playername">Player name: </label><input type="text" onclick="this.select()" autocapitalize="off" autocorrect="off" id="playername" value="Anonymous" />' +
+      '<a href="" target="_blank" class="button" id="joingame">Continue</a>';
+    this.pinup(message, 110, false);
 
     var me = this;
-    $('#joingame').bind('click', function(event) {
+    $('#joingame').unbind('click').bind('click', function(event) {
       event.preventDefault();
       $('body').removeClass('avgrund-active');
       me.joinGame(me.retrieveGameId(), $('#playername').val());
@@ -69,21 +58,35 @@ var Letternode = (function() {
     var domain = location.href.split('/')[2];
     var http = location.href.split('/')[0];
     var player2Url = http + '//' + domain + '/game/' + player2Id;
+    var additionalOption = '';
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+      additionalOption = '<a href="sms:?body=' + escape(player2Url) + '">SMS/Message</a> | ';
+    }
+    var message = 'Give the following url to the second player to allow joining this game:<br />' +
+      '<span class="subpara">Send via: ' + additionalOption +
+      '<a href="mailto:?subject=Letternode&amp;body=' + escape(player2Url) + '">Email</a></span>' +
+  		'<input type="text" autocapitalize="off" autocorrect="off" onclick="this.select();" value="' + player2Url + '" />' +
+      '<a href="" target="_blank" class="button">Continue</a>';
+  	this.pinup(message, 160, false);
+  };
+
+  Letternode.prototype.pinup = function(message, height, closeByEnable) {
     $(document).avgrund({
-  		height: 140,
-  		openOnEvent: false,
-  		holderClass: 'avgrundCustom',
-  		showClose: true,
-  		showCloseText: 'Close',
-  		enableStackAnimation: true,
-  		onBlurContainer: '#app',
-  		closeByEscape: true,
-    	closeByDocument: true,
-  		template: '<p>Give the following url to the second player to allow joining this game.' +
-  		'<br />' +
-  		'<label for="player2url">URL for Player 2: </label><input type="text" id="player2url" onclick="this.select();" value="' + player2Url + '" />' +
-  		'</p>'
-  	});
+      height: height,
+      width: 250,
+      openOnEvent: false,
+      holderClass: 'avgrundCustom',
+      showClose: false,
+      enableStackAnimation: true,
+      onBlurContainer: '#app',
+      closeByEscape: closeByEnable,
+      closeByDocument: closeByEnable,
+      template: '<p>' + message + '</p>'
+    });
+    $('.avgrundCustom a.button').bind('click', function(event) {
+      event.preventDefault();
+      $('body').removeClass('avgrund-active');
+    });
   };
 
   Letternode.prototype.info = function(message) {
@@ -375,7 +378,6 @@ var Letternode = (function() {
       history.pushState({gameId: this.game.id}, 'Game [' + this.game.id + '/' + this.game.player1 + ']', '/game/' + this.game.player1);
       this.checkPlayers();
       this.updateUi();
-      console.info('Action: gameCreated', data);
     },
     onPlayerJoined: function(data) {
       this.game = data.game;
@@ -386,16 +388,13 @@ var Letternode = (function() {
       this.winnerCheck();
       this.checkPlayers();
       this.updateUi();
-      console.info('Action: playerJoined', data);
     },
     onPlayerLeft: function(data) {
       this.game = data.game;
       this.updateUi();
-      console.info('Action: playerLeft', data);
     },
     onCreateGameRequired: function(data) {
       this.createGame()
-      console.info('Action: createGameRequired');
     },
     onPlayerMoved: function(data) {
       this.game = data.game;
@@ -407,11 +406,9 @@ var Letternode = (function() {
       }
       this.updateUi();
       this.winnerCheck();
-      console.info('Action: playerMoved', data);
     },
     onPlayerPreMoved: function(data) {
       this.checkPreMove(data.positions);
-      console.info('Action: playerPreMoved', data);
     },
     onPlayerMoveDeclined: function(data) {
       this.shake('#buttons .submit, #word');
@@ -429,7 +426,6 @@ var Letternode = (function() {
           this.winnerCheck();
           break;
       }
-      console.info('Action: playerMoveDeclined');
     }
   };
 

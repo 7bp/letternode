@@ -2,9 +2,39 @@
 
 body {
   font-family: "Source Sans Pro",sans-serif;
-  background: url('../images/dark_dotted.png') repeat #222;
   margin: 0;
   padding: 0;
+  background: #fff;
+}
+
+.start {
+  text-align: center;
+}
+
+.start h1 {
+  padding: 50px 0 0;
+  margin: 0;
+}
+
+.start h1 a {
+  font-size: 70px;
+  color: #aaa;
+  text-decoration: none;
+}
+
+.start p.info {
+  font-size: 16px;
+  line-height: 1.2;
+  color: #555;
+}
+
+.start img {
+  margin-top: 25px;
+}
+
+.start .img a {
+  text-decoration: none;
+  font-size: 10px;
 }
 
 .fader {
@@ -20,9 +50,8 @@ body {
 }
 
 #app {
-  background: #fff;
   padding: 20px;
-  min-height: 100%;
+  cursor: default;
 }
 
 #game {
@@ -232,43 +261,45 @@ body {
 }
 
 .avgrundCustom p {
-	padding: 10px 20px;
-	margin: 30px 0 0;
+	padding: 0;
+	margin: 0;
 	font-size: 14px;
 	font-weight: 300;
 	text-align: justify;
 }
 
-.avgrund-close {
-	display: block;
-	text-transform: uppercase;
-	color: #555;
-	text-decoration: none;
-	position: absolute;
-	top: 6px;
-	right: 10px;
-	font-size: 13px;
+.avgrund-overlay {
+  background: #fff;
 }
 
-.avgrundCustom .startGame {
-	float: left;
+.avgrundCustom input {
+  display: block;
+  padding: 5px;
+  width: 240px;
+}
+
+.avgrundCustom .subpara {
+  display: block;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.avgrundCustom .button {
 	text-align: center;
-	font-size: 12px;
+	font-size: 14px;
 	color: white;
-	padding: 8px 18px;
-	margin: 18px 0 0 20px;
+	padding: 10px 18px;
+	margin: 18px 0 0;
 	text-decoration: none;
 	-webkit-transition: background 0.3s ease;
 	-moz-transition: background 0.3s ease;
 	-ms-transition: background 0.3s ease;
 	-o-transition: background 0.3s ease;
 	transition: background 0.3s ease;
-}
-
-.avgrundCustom .startGame {
 	background: rgba(83, 83, 83, 0.8);
+  display: block;
 }
 
-.avgrundCustom .startGame:hover {
+.avgrundCustom .button:hover {
 	background: rgba(83, 83, 83, 1);
 }

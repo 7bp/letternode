@@ -12,32 +12,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body style="color:white">
-<h1><a href="/game">Create game</a></h1>
-<div><a id="sender">Send a Message</a>
-    <ul id="receiver"></ul>
-</div>
-<div>
-    <div id="playerList">
-        <ul>
-            <li class="player1">Player1: <strong>Player1</strong> (<em>No</em>)</li>
-            <li class="player2">Player2: <strong>Player2</strong> (<em>No</em>)</li>
-        </ul>
-    </div>
-    <pre id="stateMatrix" style="height:200px;width:200px;background-color:white;color:black;"></pre>
-    <form id="form">
-        <fieldset>
-            <legend>Message</legend>
-            <label for="playerName">Player Name: <input id="playerName" value="Benjamin"/></label><br/>
-            <label for="gameId">Game ID: <input id="gameId"/></label><br/>
-            <button type="button" id="createGame">Create Game</button>
-            <button type="button" id="joinGame">Join Game</button>
-            <button type="button" id="move">Move</button>
-            <button type="button" id="preMove">PreMove</button>
-        </fieldset>
-    </form>
-</div>
-<footer>
+<body>
+  <div id="app" class="start">
+    <h1><a href="/game">Letternode</a></h1>
+    <p class="info">
+      The LetterPress clone written in Node.js
+    </p>
+    <p class="img">
+      <a href="/game">
+        <img src="/images/intro.png"><br>
+        Click to start a new game.
+      </a>
+    </p>
+  </div>
+  <footer>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')
     </script>
