@@ -50,21 +50,25 @@ body {
   background: #efefef;
 }
 
+.fader.status0,
 #game a.status0,
 #word a.status0 {
   background: #6262d1;
 }
 
+.fader.status1,
 #game a.status1,
 #word a.status1 {
   background: #b1b1d4;
 }
 
+.fader.status3,
 #game a.status3,
 #word a.status3 {
   background: #cea5a5;
 }
 
+.fader.status4,
 #game a.status4,
 #word a.status4 {
   background: #df7e7e;

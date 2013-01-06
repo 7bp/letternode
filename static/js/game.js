@@ -121,7 +121,7 @@ var Letternode = (function() {
       (this.playerNum === 2 && !this.game.player2Name)
     ) {
       this.pinupPromptPlayerName();
-    } else if (this.playerNum === 1 && !this.game.player2Available) {
+    } else if (this.playerNum === 1 && !this.game.player2Name && !this.game.player2Available) {
       this.pinupPlayer2Url(this.game.player2);
     }
   };
