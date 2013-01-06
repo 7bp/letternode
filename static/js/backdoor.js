@@ -19,10 +19,9 @@ var Backdoor = (function($) {
     var element = $('<div id="" class="game"><div class="id"></div></div>');
     element.attr('id', id);
     element.find('div.id').text(game.id);
-    element.append($('<div class="players"><div class="player1"><div class="name"></div><div class="id"></div><ol class="words"></ol></div><span>vs.</span><div class="player2"><div class="name"></div><div class="id"></div><ol class="words"></ol></div></div>'));
+    element.append($('<div class="players"><div class="player1"><div class="name"></div><div class="score"></div><div class="id"></div><ol class="words"></ol></div><span>vs.</span><div class="player2"><div class="name"></div><div class="score"></div><div class="id"></div><ol class="words"></ol></div></div>'));
     element.append($('<div class="lastChange"></div>'));
     element.append($('<div class="currentWord"></div>'));
-    element.append($('<div class="points"></div>'));
     element.append($('<div class="matrix"></div>'));
 
     var matrix = element.find('.matrix');
@@ -53,8 +52,10 @@ var Backdoor = (function($) {
 
     gameElement.find('.player1 .id').text(game.player1);
     gameElement.find('.player1 .name').text(game.player1Name);
+    gameElement.find('.player1 .score').text(game.player1Score);
     gameElement.find('.player2 .id').text(game.player2);
     gameElement.find('.player2 .name').text(game.player2Name);
+    gameElement.find('.player2 .score').text(game.player2Score);
     gameElement.find('.lastChange').text(game.updated);
 
     var gameMatrix = gameElement.find('.matrix');
