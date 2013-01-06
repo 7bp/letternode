@@ -8,7 +8,7 @@ exports['Words'] = {
     this.emptyFn = function() {
     };
   },
-  'Load EWOL with Cache': function(test) {
+  'Load EOWL with Cache': function(test) {
     var words = Words.loadDictionary({
       basePath: 'lib/dictionary/eowl',
       fileNameChars: 1,
@@ -23,7 +23,7 @@ exports['Words'] = {
         });
     });
   },
-  'Load EWOL with Cache (failed)': function(test) {
+  'Load EOWL with Cache (failed)': function(test) {
     var words = Words.loadDictionary({
       basePath: 'lib/dictionary/eowl',
       fileNameChars: 1,
@@ -38,7 +38,7 @@ exports['Words'] = {
         });
     });
   },
-  'Load EWOL without Cache': function(test) {
+  'Load EOWL without Cache': function(test) {
     var words = Words.loadDictionary({
       basePath: 'lib/dictionary/eowl',
       fileNameChars: 1,
@@ -53,7 +53,7 @@ exports['Words'] = {
         });
     });
   },
-  'Load EWOL without Cache (failed)': function(test) {
+  'Load EOWL without Cache (failed)': function(test) {
     var words = Words.loadDictionary({
       basePath: 'lib/dictionary/eowl',
       fileNameChars: 1,
