@@ -56,7 +56,7 @@ var Backdoor = (function($) {
     gameElement.find('.player2 .id').text(game.player2);
     gameElement.find('.player2 .name').text(game.player2Name);
     gameElement.find('.player2 .score').text(game.player2Score);
-    gameElement.find('.lastChange').text(game.updated);
+    gameElement.find('.lastChange').text(game.updatedAsAgo).attr('title', new Date(game.updated).toString());
 
     var gameMatrix = gameElement.find('.matrix');
     for (i = 0; i < 25; i++) {

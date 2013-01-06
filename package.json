@@ -36,7 +36,8 @@
     "q": ">=0.8",
     "eventemitter2": "~0.4.11",
     "pad": "0.0.4",
-    "dateformat": "1.0.4-1.2.3"
+    "dateformat": "1.0.4-1.2.3",
+    "timeago": "0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.3.17",
