@@ -346,7 +346,19 @@ var Letternode = (function() {
     this.socket.emit('move', {gameId: this.game.id, positions: this.selectedWord()});
   };
 
-   var events = {
+  Letternode.prototype.winnerCheck = function() {
+    if (this.game.state === 'FINISHED') {
+    var winnerName = 'Nobody';
+      if (this.game.player1Score > this.game.player2Score) {
+        winnerName = this.game.player1Name;
+      } else if (this.game.player2Score > this.game.player1Score) {
+        winnerName = this.game.player2Name;
+      }
+      this.info('Game Over! Score is ' + this.game.player1Score + ' vs ' + this.game.player2Score + '. ' + winnerName + ' has won the game!');
+    }
+  };
+
+  var events = {
     onGameCreated: function(data) {
       this.game = data.game;
       this.playerNum = data.playerNum;
@@ -377,15 +389,7 @@ var Letternode = (function() {
         this.clearSelectedLetters();
       }
       this.updateUi();
-      if (data.game.state === 'FINISHED') {
-        var winnerName = 'Nobody';
-        if (data.game.player1Score > data.game.player2Score) {
-          winnerName = data.game.player1Name;
-        } else if (data.game.player2Score > data.game.player1Score) {
-          winnerName = data.game.player2Name;
-        }
-        this.info('Game Over! Score is ' + data.game.player1Score + ' vs ' + data.game.player2Score + '. ' + winnerName + ' has won the game!');
-      }
+      this.winnerCheck();
       console.info('Action: playerMoved', data);
     },
     onPlayerPreMoved: function(data) {
@@ -403,6 +407,9 @@ var Letternode = (function() {
           break;
         case 'word_invalid':
           this.info('The word is invalid.');
+          break;
+        case 'game_already_finished':
+          this.winnerCheck();
           break;
       }
       console.info('Action: playerMoveDeclined');
