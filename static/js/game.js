@@ -23,7 +23,7 @@ var Letternode = (function() {
     });
 
     var me = this;
-    $('#joingame').hammer().bind('tap', function(event) {
+    $('#joingame').bind('click', function(event) {
       event.preventDefault();
       $('body').removeClass('avgrund-active');
       me.joinGame(me.retrieveGameId(), $('#playername').val());
