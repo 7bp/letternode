@@ -52,22 +52,22 @@ body {
 
 #game a.status0,
 #word a.status0 {
-  background: #df7e7e;
+  background: #6262d1;
 }
 
 #game a.status1,
 #word a.status1 {
-  background: #cea5a5;
+  background: #b1b1d4;
 }
 
 #game a.status3,
 #word a.status3 {
-  background: #b1b1d4;
+  background: #cea5a5;
 }
 
 #game a.status4,
 #word a.status4 {
-  background: #6262d1;
+  background: ##df7e7e;
 }
 
 #game a:hover,

@@ -83,6 +83,7 @@ var Letternode = (function() {
     });
     this.socket.on('playerMoved', function(data) {
       me.gameUpdate(data);
+      me.updateUi();
       console.info('Action: ' + 'playerMoved', data);
     });
     this.socket.on('playerPreMoved', function(data) {
@@ -149,6 +150,13 @@ var Letternode = (function() {
           status = Math.abs(status - 4);
         }
         $('#game a').eq(i)
+          .removeClass('status0')
+          .removeClass('status1')
+          .removeClass('status2')
+          .removeClass('status3')
+          .removeClass('status4')
+          .addClass('status' + status);
+        $('#word a[data-position="' + i + '"]')
           .removeClass('status0')
           .removeClass('status1')
           .removeClass('status2')
@@ -363,25 +371,6 @@ var Letternode = (function() {
     if (data.playerNum === this.playerNum) {
       this.clearSelectedLetters();
     }
-    console.info(data.playerNum + "=" + this.playerNum);
-    var i;
-    for (i = 0; i < 25; i++) {
-      $('#game a').eq(i)
-        .removeClass('status0')
-        .removeClass('status1')
-        .removeClass('status2')
-        .removeClass('status3')
-        .removeClass('status4')
-        .addClass('status' + game.stateMatrix[i]);
-      $('#word a[data-position="' + i + '"]')
-        .removeClass('status0')
-        .removeClass('status1')
-        .removeClass('status2')
-        .removeClass('status3')
-        .removeClass('status4')
-        .addClass('status' + game.stateMatrix[i]);
-    }
-    // further game matrix updates required
   };
 
   Letternode.prototype.preMove = function() {
