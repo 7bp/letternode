@@ -1,19 +1,14 @@
 # letternode [![Build Status](https://secure.travis-ci.org/7bp/letternode.png?branch=master)](http://travis-ci.org/7bp/letternode)
 
-The best project ever.
+Letternode is a game based on the idea of LetterPress for iOS but written in Node.js and using the EOWL dictionary by default.
 
 ## Getting Started
-Install the module with: `npm install letternode`
+Clone, check requirements with "npm install" and run the server by "node lib/server.js" or equivalent solutions e.g. using forever.
 
-```javascript
-var letternode = require('letternode');
-letternode.awesome(); // "awesome"
-```
+## Demo
+http://bp.la/letternode
 
 ## Documentation
-_(Coming soon)_
-
-## Examples
 _(Coming soon)_
 
 ## Contributing
@@ -27,9 +22,9 @@ Copyright (c) 2012 7bp
 Licensed under the MIT license.
 
 ## Further Information For Dictionaries
-EOWL)
+### EOWL
 The English Open Word List (EOWL) is taken from http://dreamsteep.com/projects/the-english-open-word-list.html
 It is based but almost entirely derived from the UK Advanced Cryptics Dictionary (UKACD) Version 1.6, by J Ross Beresford (http://cfaj.freeshell.org/wordfinder/UKACD17.shtml).
 UK Advanced Cryptics Dictionary Licensing Information: Copyright (c) J Ross Beresford 1993-1999. All Rights Reserved. The following restriction is placed on the use of this publication: if the UK Advanced Cryptics Dictionary is used in a software package or redistributed in any form, the copyright notice must be prominently displayed and the text of this document must be included verbatim.
-LETTERPRESS)
-Futhermore you may use the LetterPress original dictionaries as well. Simple fetch the files from the app-file and place them into the lib/dictionary/letterpress folder.
+### LETTERPRESS
+Futhermore you may use the LetterPress original dictionaries as well. Simple fetch the files from the app-file and place them into the lib/dictionary/letterpress folder. I do not suggest that you use those files on a public advised webspace.
