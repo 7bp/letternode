@@ -169,6 +169,7 @@ var Letternode = (function() {
       $('#player2Words').append('<li>'+this.game.player2Words[i]+'</li>');
     }
 
+    // initial game matrix initializing
     if ($('#game a').length === 0) {
       var i;
       for (i = 0; i < this.game.gameMatrix.length; i++) {
@@ -257,7 +258,7 @@ var Letternode = (function() {
       .off('tap')
       .on('tap', function(event) {
         event.preventDefault();
-        if (!$(this).hasClass('selected')) {
+        if (!$(this).hasClass('ui-draggable-dragging') && !$(this).hasClass('selected')) {
           $(this).addClass('selected');
           me.selectLetter($(this).index('#game a'));
         }
@@ -269,6 +270,14 @@ var Letternode = (function() {
     $('#buttons .submit').off('tap').on('tap', function(event) {
       event.preventDefault();
       me.move();
+    });
+    $('#word').sortable({
+      containment: 'parent',
+      items: '> a',
+      opacity: 0.5,
+      tolerance: 'pointer',
+      cursor: 'move',
+      grid: [50, 0]
     });
   };
 
@@ -360,9 +369,11 @@ var Letternode = (function() {
           .on('tap', function(event) {
             // deselect
             event.preventDefault();
-            var position = $(this).attr('data-position');
-            me.deselectLetter(this);
-            $('#game a').eq(position).removeClass('selected');
+            if (!$(this).hasClass('ui-draggable-dragging')) {
+              var position = $(this).attr('data-position');
+              me.deselectLetter(this);
+              $('#game a').eq(position).removeClass('selected');
+            }
           });
         $('#word').css({ width: 50 * ($('#word a').length + 1) });
         $('#word').append(clonedLetter);
