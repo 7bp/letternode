@@ -52,6 +52,13 @@ var Letternode = (function() {
       $('body').removeClass('avgrund-active');
       me.joinGame(me.retrieveGameId(), $('#playername').val());
     });
+    $('#playername').keypress(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+        $('body').removeClass('avgrund-active');
+        me.joinGame(me.retrieveGameId(), $('#playername').val());
+      }
+    });
   };
 
   Letternode.prototype.pinupPlayer2Url = function(player2Id) {
@@ -86,6 +93,12 @@ var Letternode = (function() {
     $('.avgrundCustom a.button').bind('click', function(event) {
       event.preventDefault();
       $('body').removeClass('avgrund-active');
+    });
+    $('#playername').unbind('keypress').keypress(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+        $('body').removeClass('avgrund-active');
+      }
     });
   };
 
