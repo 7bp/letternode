@@ -413,7 +413,7 @@ var Letternode = (function() {
       this.game = data.game;
       if (data.playerNum === this.playerNum) {
         this.clearSelectedLetters();
-        $('#gameMessage').text('Please wait for opponents move.);
+        $('#gameMessage').text('Please wait for opponents move.');
       } else {
         $('#gameMessage').text('It\'s your turn!');
       }
