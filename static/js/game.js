@@ -7,7 +7,7 @@ var Letternode = (function() {
     this.playerName = false;
   }
 
-    Letternode.prototype.initialize = function() {
+  Letternode.prototype.initialize = function() {
     this.socketBinds();
     // detect whether a game must be created or resumed
     if (!this.resumeGame()) {
@@ -126,6 +126,9 @@ var Letternode = (function() {
     this.socket.on('playerPreMoved', function(data) {
       events.onPlayerPreMoved.call(me, data);
     });
+    this.socket.on('playerRestartedGame', function(data) {
+      events.onPlayerRestartedGame.call(me, data);
+    });
     this.socket.on('playerMoveDeclined', function(data) {
       events.onPlayerMoveDeclined.call(me, data);
     });
@@ -218,8 +221,8 @@ var Letternode = (function() {
     var clonedLetter = $('#game a').eq(position).clone();
     $(clonedLetter)
       .attr('data-position', position)
-      .hammer()
-      .unbind('tap').bind('tap', function(event) {
+      .off('tap')
+      .on('tap', function(event) {
         // deselect
         event.preventDefault();
         var position = $(this).attr('data-position');
@@ -250,17 +253,21 @@ var Letternode = (function() {
   Letternode.prototype.bindGameEvents = function() {
     var me = this;
     // select letter for word
-    $('#game a').hammer().bind('tap', function(event) {
+    $('#game a')
+      .off('tap')
+      .on('tap', function(event) {
+        event.preventDefault();
+        if (!$(this).hasClass('selected')) {
+          $(this).addClass('selected');
+          me.selectLetter($(this).index('#game a'));
+        }
+      });
+    $('#buttons .clear').off('tap').on('tap', function(event) {
       event.preventDefault();
-      if (!$(this).hasClass('selected')) {
-        $(this).addClass('selected');
-        me.selectLetter($(this).index('#game a'));
-      }
-    });
-    $('#buttons .clear').hammer().bind('tap', function(event) {
       me.clearSelectedLetters();
     });
-    $('#buttons .submit').hammer().bind('tap', function(event) {
+    $('#buttons .submit').off('tap').on('tap', function(event) {
+      event.preventDefault();
       me.move();
     });
   };
@@ -349,8 +356,8 @@ var Letternode = (function() {
         $('#game a').eq(this).addClass('selected');
         $(clonedLetter)
           .attr('data-position', this)
-          .hammer()
-          .unbind('tap').bind('tap', function(event) {
+          .off('tap')
+          .on('tap', function(event) {
             // deselect
             event.preventDefault();
             var position = $(this).attr('data-position');
@@ -372,15 +379,28 @@ var Letternode = (function() {
     this.socket.emit('move', {gameId: this.game.id, positions: this.selectedWord()});
   };
 
+  Letternode.prototype.restartGame = function() {
+    this.socket.emit('restartGame', {gameId: this.game.id, playerNum: this.playerNum});
+  };
+
   Letternode.prototype.winnerCheck = function() {
     if (this.game.state === 'FINISHED') {
-    var winnerName = 'Nobody';
+      var winnerName = 'Nobody', me = this;
       if (this.game.player1Score > this.game.player2Score) {
         winnerName = this.game.player1Name;
       } else if (this.game.player2Score > this.game.player1Score) {
         winnerName = this.game.player2Name;
       }
       this.info('Game Over! Score is ' + this.game.player1Score + ' vs ' + this.game.player2Score + '. ' + winnerName + ' has won the game!');
+      $('#buttons .clear').hide();
+      $('#buttons .submit')
+        .text('Restart')
+        .off('tap')
+        .on('tap', function(event) {
+          event.preventDefault();
+          $(this).off('tap');
+          me.restartGame();
+        }).stop().fadeIn('fast');
     }
   };
 
@@ -397,10 +417,12 @@ var Letternode = (function() {
       this.playerNum = data.playerNum;
       if (this.game.activePlayer === this.playerNum) {
         $('#gameMessage').text('It\'s your turn!');
+      } else {
+        $('#gameMessage').text('Please wait for opponents move.');
       }
+      this.updateUi();
       this.winnerCheck();
       this.checkPlayers();
-      this.updateUi();
     },
     onPlayerLeft: function(data) {
       this.game = data.game;
@@ -422,6 +444,14 @@ var Letternode = (function() {
     },
     onPlayerPreMoved: function(data) {
       this.checkPreMove(data.positions);
+    },
+    onPlayerRestartedGame: function(data) {
+      $('#gameMessage').text('The game has been restarted.');
+      if (data.playerNum === 1) {
+        location.href = '/game/' + data.game.player1;
+      } else if (data.playerNum === 2) {
+        location.href = '/game/' + data.game.player2;
+      }
     },
     onPlayerMoveDeclined: function(data) {
       this.shake('#buttons .submit, #word');
