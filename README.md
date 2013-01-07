@@ -18,7 +18,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2012 7bp  
+Copyright (c) 2012 7bp and knalli
 Licensed under the MIT license.
 
 ## Further Information For Dictionaries
