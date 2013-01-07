@@ -41,10 +41,10 @@ var Letternode = (function() {
     }
   };
 
-  Letternode.prototype.pinupPromptPlayerName = function() {
+  Letternode.prototype.alertPromptPlayerName = function() {
     var message = '<label for="playername">Player name: </label><input type="text" onclick="this.select()" autocapitalize="off" autocorrect="off" id="playername" value="Anonymous" />' +
       '<a href="" target="_blank" class="button" id="joingame">Continue</a>';
-    this.pinup(message, 110, false);
+    this.alert(message, 110, false);
 
     var me = this;
     $('#joingame').unbind('click').bind('click', function(event) {
@@ -61,7 +61,7 @@ var Letternode = (function() {
     });
   };
 
-  Letternode.prototype.pinupPlayer2Url = function(player2Id) {
+  Letternode.prototype.alertPlayer2Url = function(player2Id) {
     var domain = location.href.split('/')[2];
     var http = location.href.split('/')[0];
     var player2Url = http + '//' + domain + '/game/' + player2Id;
@@ -74,10 +74,10 @@ var Letternode = (function() {
       '<a href="mailto:?subject=Letternode&amp;body=' + escape(player2Url) + '">Email</a></span>' +
   		'<input type="text" autocapitalize="off" autocorrect="off" onclick="this.select();" value="' + player2Url + '" />' +
       '<a href="" target="_blank" class="button">Continue</a>';
-  	this.pinup(message, 160, false);
+  	this.alert(message, 160, false);
   };
 
-  Letternode.prototype.pinup = function(message, height, closeByEnable) {
+  Letternode.prototype.alert = function(message, height, closeByEnable) {
     $(document).avgrund({
       height: height,
       width: 250,
@@ -136,9 +136,9 @@ var Letternode = (function() {
       (this.playerNum === 1 && !this.game.player1Name) ||
       (this.playerNum === 2 && !this.game.player2Name)
     ) {
-      this.pinupPromptPlayerName();
+      this.alertPromptPlayerName();
     } else if (this.playerNum === 1 && !this.game.player2Name && !this.game.player2Available) {
-      this.pinupPlayer2Url(this.game.player2);
+      this.alertPlayer2Url(this.game.player2);
     }
   };
 
