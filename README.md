@@ -1,4 +1,4 @@
-# letternode [![Build Status](https://secure.travis-ci.org/7bp/letternode.png?branch=master)](http://travis-ci.org/7bp/letternode)
+# Letternode [![Build Status](https://secure.travis-ci.org/7bp/letternode.png?branch=master)](http://travis-ci.org/7bp/letternode)
 
 Letternode is a game based on the idea of LetterPress for iOS but written in Node.js and using the EOWL dictionary by default.
 
