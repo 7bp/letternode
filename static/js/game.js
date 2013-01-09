@@ -233,6 +233,15 @@ var Letternode = (function() {
     $('#word').stop().animate({ width: 50 * ($('#word a').length + 1) }, 'fast', function() {
       $('#word').append(clonedLetter);
       me.fader($('#game a').eq(position), clonedLetter);
+      // re-init sortable
+      $('#word').sortable({
+        containment: 'parent',
+        items: '> a',
+        opacity: 0.5,
+        tolerance: 'pointer',
+        cursor: 'move',
+        grid: [50, 0]
+      });
       me.preMove();
     });
     this.updateUi();
@@ -270,14 +279,6 @@ var Letternode = (function() {
     $('#buttons .submit').off('tap').on('tap', function(event) {
       event.preventDefault();
       me.move();
-    });
-    $('#word').sortable({
-      containment: 'parent',
-      items: '> a',
-      opacity: 0.5,
-      tolerance: 'pointer',
-      cursor: 'move',
-      grid: [50, 0]
     });
   };
 
