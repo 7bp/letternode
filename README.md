@@ -9,7 +9,7 @@ Clone, check requirements with "npm install" and run the server by "node lib/ser
 http://bp.la/letternode
 
 ## Documentation
-_(Coming soon)_
+https://github.com/7bp/letternode/wiki
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/gruntjs/grunt).
