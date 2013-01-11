@@ -14,5 +14,5 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  compass (~> 0.12.2)
-  sass (~> 3.2.3)
+  compass (~> 0.12)
+  sass (~> 3.2)
