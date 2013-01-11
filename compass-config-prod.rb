@@ -1,5 +1,5 @@
-require "rubygems"
-require "bundler/setup"
+#require "rubygems"
+#require "bundler/setup"
 
 #For Fire-SASS & CSS Source Maps
 #sass_options = { :debug_info => true }
