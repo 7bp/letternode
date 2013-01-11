@@ -42,6 +42,7 @@
   "devDependencies": {
     "grunt": "~0.3.17",
     "grunt-hustler": "0.7.3",
+    "grunt-compass" : "0.3.7",
     "vows": "0.5.x",
     "mocha": "*",
     "should": "*"
