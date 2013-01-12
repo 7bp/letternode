@@ -1,23 +1,45 @@
 module.exports = function(grunt) {
   "use strict";
-  
+
   // Project configuration.
   grunt.initConfig({
     pkg: '<json:package.json>',
-    
+
+    // delete the dist folder
+    delete: {
+      css: {
+        files: ['./static/css/']
+      }
+    },
+
     test: {
       files: ['test/**/*.js']
     },
-    
+
     lint: {
       files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
     },
-    
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
+
+    compass: {
+      dev: {
+        config: 'compass-config-dev.rb'
+      },
+      prod: {
+        config: 'compass-config-prod.rb'
+      }
     },
-    
+
+    watch: {
+      javascript: {
+        files: '<config:lint.files>',
+        tasks: 'lint test'
+      },
+      compass: {
+        files: ['./static/scss/*.scss'],
+        tasks: ['compass:dev']
+      }
+    },
+
     jshint: {
       options: {
         curly: true,
@@ -37,7 +59,7 @@ module.exports = function(grunt) {
         exports: true
       }
     },
-    
+
     server: {
       app: {
         src: './lib/server.js',
@@ -49,11 +71,16 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-hustler');
 
-  // Default task.
-  grunt.registerTask('default', 'lint test');
-  
-  grunt.registerTask('dev', 'lint test watch');
+  // https://github.com/kahlil/grunt-compass
+  grunt.loadNpmTasks('grunt-compass');
 
-  grunt.registerTask('travis', 'lint test');
+  // Default task.
+  grunt.registerTask('default', 'delete:css lint compass test');
+
+  grunt.registerTask('dev', 'delete:css lint compass:dev test watch');
+
+  grunt.registerTask('prod', 'delete:css lint compass:prod test watch');
+
+  grunt.registerTask('travis', 'lint compass  test');
 
 };

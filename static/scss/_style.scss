@@ -1,0 +1,247 @@
+@import "compass/css3";
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+
+body {
+  font-family: "Source Sans Pro",sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+.fader {
+  position: absolute;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  line-height: 30px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #333;
+  background: #efefef;
+
+  .status0 {
+    background: #6262d1;
+  }
+  .status1 {
+    background: #b1b1d4;
+  }
+  .status3 {
+    background: #cea5a5;
+  }
+  .status4 {
+    background: #df7e7e;
+  }
+}
+
+#app {
+  padding: 20px;
+  cursor: default;
+
+  &.start {
+    text-align: center;
+
+    h1 {
+      padding: 50px 0 0;
+      margin: 0;
+
+      a {
+        font-size: 70px;
+        color: #aaa;
+        text-decoration: none;
+      }
+    }
+
+    p.info {
+      font-size: 16px;
+      line-height: 1.2;
+      color: #555;
+    }
+
+    img {
+      margin-top: 25px;
+
+      a {
+        text-decoration: none;
+        font-size: 10px;
+      }
+    }
+  }
+
+  #word {
+    margin: 45px auto 0;
+    height: 50px;
+    overflow: hidden;
+
+    .fader {
+      @extend .fader;
+    }
+  }
+
+  #game {
+    width: 250px;
+    height: 250px;
+    margin: 25px auto;
+
+    .fader {
+      @extend .fader;
+    }
+  }
+
+  #game a, #word a {
+    display: block;
+    text-align: center;
+    width: 50px;
+    font-size: 30px;
+    line-height: 30px;
+    padding: 10px 0;
+    float: left;
+    text-decoration: none;
+    color: #333;
+    background: #efefef;
+
+    &:hover {
+      box-shadow: inset 0 0 10px #372cb1, 0 0 2px #000;
+    }
+    &.selected {
+      @include opacity(0.3);
+    }
+  }
+
+  #gameMessage, #playerInfo {
+    width: 540px;
+    margin: 0 auto;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+
+  #gameMessage {
+    height: 30px;
+    overflow: hidden;
+    text-align: center;
+    color: #777;
+  }
+
+  #playerInfo {
+    .player1Name, .player2Name {
+      padding: 5px;
+      width: 90px;
+      overflow: hidden;
+    }
+
+    span {
+      float: left;
+      display: block;
+    }
+
+    .status {
+      width: 10px;
+      font-weight: bold;
+      font-size: 1.5em;
+      position: relative;
+      top: -6px;
+
+      &.available0 {
+        color: #f00;
+      }
+
+      &.available1 {
+        color: #006f05;
+      }
+    }
+
+    .name {
+      width: 80px;
+      overflow: hidden;
+    }
+
+    .player1Name {
+      float: left;
+      text-align: right;
+    }
+
+    .player2Name {
+      float: right;
+
+      .status {
+        text-align: right;
+      }
+    }
+
+    .player1Score,
+    .player2Score {
+      position: relative;
+      top: -4px;
+      font-size: 2em;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .player1Score {
+      float: left;
+      margin-left: 10px;
+    }
+
+    .player2Score {
+      float: right;
+      margin-right: 10px;
+    }
+  }
+
+  #buttons {
+    width: 250px;
+    margin: 0 auto;
+
+    .clear {
+      float: left;
+    }
+
+    .submit {
+      float: right;
+    }
+
+    button {
+      border: 0;
+      background: rgba(83, 83, 83, 0.8);
+      border-radius: 4px;
+      padding: 7px 8px;
+      color: #fff;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(83, 83, 83, 1.0);
+      }
+    }
+  }
+
+  #player1Words,
+  #player2Words {
+    position:absolute;
+    width: 100px;
+    top: 166px;
+    left: 50%;
+    list-style: none;
+    color: #777;
+    padding: 0;
+    margin: 0;
+
+    li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      &:first-child {
+        font-weight: 600;
+      }
+    }
+  }
+
+  #player1Words {
+    margin-left: -245px;
+    text-align: right;
+  }
+
+  #player2Words {
+    margin-left: 145px;
+  }
+}

@@ -17,3 +17,5 @@ npm-debug.log
 games.json
 .idea
 *.iml
+.sass-cache
+static/css
