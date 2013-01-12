@@ -77,9 +77,9 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', 'delete:css lint compass test');
 
-  grunt.registerTask('dev', 'delete:css lint compass:dev test watch');
+  grunt.registerTask('dev', 'delete:css lint compass:dev test');
 
-  grunt.registerTask('prod', 'delete:css lint compass:prod test watch');
+  grunt.registerTask('prod', 'delete:css lint compass:prod test');
 
   grunt.registerTask('travis', 'lint compass  test');
 
