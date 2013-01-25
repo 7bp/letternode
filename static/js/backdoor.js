@@ -131,6 +131,6 @@ var Backdoor = (function($) {
 
 (function($){
   $(document).ready(function() {
-  new Backdoor().initialize();
-});
+    new Backdoor().initialize();
+  });
 })(jQuery);
