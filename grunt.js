@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     },
 
     lint: {
-      files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
+      files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js', 'static/js/backdoor.js', 'static/js/game.js']
     },
 
     compass: {
