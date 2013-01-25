@@ -1,5 +1,10 @@
-var Letternode = (function() {
-  function Letternode($) {
+/*global jQuery, io*/
+/*jshint browser:true, nonstandard:true*/
+
+'use strict';
+
+var Letternode = (function($) {
+  function Letternode() {
     // current game session
     this.game = {};
     this.playerNum = 0;
@@ -23,7 +28,7 @@ var Letternode = (function() {
 
   Letternode.prototype.resumeGame = function() {
     var gameId = this.retrieveGameId();
-    if (gameId && gameId != '') {
+    if (gameId && gameId !== '') {
       this.joinGame(gameId);
       return true;
     }
@@ -35,7 +40,7 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.joinGame = function(playerId, playerName) {
-    if (typeof playerName != 'undefined') {
+    if (typeof playerName !== 'undefined') {
       this.socket.emit('joinGame', {playerName: playerName, playerId: playerId});
     } else {
       this.socket.emit('joinGame', {playerId: playerId});
@@ -54,7 +59,7 @@ var Letternode = (function() {
       me.joinGame(me.retrieveGameId(), $('#playername').val());
     });
     $('#playername').keypress(function(event) {
-      if (event.which == 13) {
+      if (event.which === 13) {
         event.preventDefault();
         $('body').removeClass('avgrund-active');
         me.joinGame(me.retrieveGameId(), $('#playername').val());
@@ -73,9 +78,9 @@ var Letternode = (function() {
     var message = 'Give the following url to the second player to allow joining this game:<br />' +
       '<span class="subpara">Send via: ' + additionalOption +
       '<a href="mailto:?subject=Letternode&amp;body=' + escape(player2Url) + '">Email</a></span>' +
-  		'<input type="text" autocapitalize="off" autocorrect="off" onclick="this.select();" value="' + player2Url + '" />' +
+      '<input type="text" autocapitalize="off" autocorrect="off" onclick="this.select();" value="' + player2Url + '" />' +
       '<a href="" target="_blank" class="button">Continue</a>';
-  	this.alert(message, 160, false);
+    this.alert(message, 160, false);
   };
 
   Letternode.prototype.alert = function(message, height, closeByEnable) {
@@ -96,7 +101,7 @@ var Letternode = (function() {
       $('body').removeClass('avgrund-active');
     });
     $('#playername').unbind('keypress').keypress(function(event) {
-      if (event.which == 13) {
+      if (event.which === 13) {
         event.preventDefault();
         $('body').removeClass('avgrund-active');
       }
@@ -147,6 +152,7 @@ var Letternode = (function() {
   };
 
   Letternode.prototype.updateUi = function() {
+    var i, c, status;
     if (this.game.player1Name) {
       $('.player1Name .name').text(this.game.player1Name);
       $('.player1Name .status').addClass('available' + (this.game.player1Available ? '1' : '0'));
@@ -163,18 +169,17 @@ var Letternode = (function() {
     }
 
     $('#player1Words li, #player2Words li').remove();
-    for (var i = this.game.player1Words.length - 1, c = 0; i >= c; i--) {
+    for (i = this.game.player1Words.length - 1, c = 0; i >= c; i--) {
       $('#player1Words').append('<li>'+this.game.player1Words[i]+'</li>');
     }
-    for (var i = this.game.player2Words.length - 1, c = 0; i >= c; i--) {
+    for (i = this.game.player2Words.length - 1, c = 0; i >= c; i--) {
       $('#player2Words').append('<li>'+this.game.player2Words[i]+'</li>');
     }
 
     // initial game matrix initializing
     if ($('#game a').length === 0) {
-      var i;
       for (i = 0; i < this.game.gameMatrix.length; i++) {
-        var status = this.game.stateMatrix[i];
+        status = this.game.stateMatrix[i];
         if (this.playerNum === 2) {
           status = Math.abs(status - 4);
         }
@@ -182,9 +187,8 @@ var Letternode = (function() {
       }
       this.bindGameEvents();
     } else {
-      var i;
       for (i = 0; i < this.game.gameMatrix.length; i++) {
-        var status = this.game.stateMatrix[i];
+        status = this.game.stateMatrix[i];
         if (this.playerNum === 2) {
           status = Math.abs(status - 4);
         }
@@ -359,7 +363,7 @@ var Letternode = (function() {
 
   Letternode.prototype.checkPreMove = function(positions) {
     var me = this;
-    if (this.selectedWord() != positions) {
+    if (this.selectedWord() !== positions) {
       $('#word a').remove();
       $('#game a').removeClass('selected');
       $.each(positions, function(key) {
@@ -442,7 +446,7 @@ var Letternode = (function() {
       this.updateUi();
     },
     onCreateGameRequired: function(data) {
-      this.createGame()
+      this.createGame();
     },
     onPlayerMoved: function(data) {
       this.game = data.game;
@@ -486,9 +490,11 @@ var Letternode = (function() {
   };
 
   return Letternode;
-})();
+})(jQuery);
 
-$(document).ready(function() {
-  var letternode = new Letternode($);
+(function($){
+  $(document).ready(function() {
+  var letternode = new Letternode();
   letternode.initialize();
 });
+})(jQuery);

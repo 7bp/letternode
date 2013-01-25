@@ -1,3 +1,8 @@
+/*global jQuery, io*/
+/*jshint browser:true, nonstandard:true*/
+
+'use strict';
+
 var Backdoor = (function($) {
 
   function Backdoor() {
@@ -73,16 +78,16 @@ var Backdoor = (function($) {
 
     gameMatrix.find('.cell').removeClass('selected');
     if (data.positions) {
-      var word = '';
+      var word = '', position;
       for (i = 0, c = data.positions.length; i < c; i++) {
-        var position = parseInt(data.positions[i]);
+        position = parseInt(data.positions[i], 10);
         gameMatrix.find('.idx-' + position).addClass('selected');
         word += game.gameMatrix[position];
       }
       gameElement.find('.currentWord').text(word);
     }
 
-    if (game.activePlayer == 1) {
+    if (game.activePlayer === 1) {
       gameElement.find('.player1').addClass('active');
       gameElement.find('.player2').removeClass('active');
     } else {
@@ -122,9 +127,10 @@ var Backdoor = (function($) {
 
   return Backdoor;
 
-})
-  ($);
+})(jQuery);
 
-$(document).ready(function() {
-  new Backdoor($).initialize();
-});
+(function($){
+  $(document).ready(function() {
+    new Backdoor().initialize();
+  });
+})(jQuery);
