@@ -3,10 +3,8 @@ var Letternode = (function() {
     // current game session
     this.game = {};
     this.playerNum = 0;
-    this.socket = io.connect({
-      // https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
-      'connect timeout': 5000 // default: 10000ms 
-    )};
+    // https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
+    this.socket = io.connect();
     this.playerName = false;
   }
 
