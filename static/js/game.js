@@ -15,6 +15,7 @@ var Letternode = (function($) {
 
   Letternode.prototype.initialize = function() {
     this.socketBinds();
+    this.registerShakeEvents();
     // detect whether a game must be created or resumed
     if (!this.resumeGame()) {
       this.createGame();
@@ -419,6 +420,14 @@ var Letternode = (function($) {
           me.restartGame();
         }).stop().fadeIn('fast');
     }
+  };
+  Letternode.prototype.registerShakeEvents = function(event) {
+    var me = this, onShake = function() {
+      if (me.game.id) {
+        me.clearSelectedLetters();
+      }
+    };
+    window.addEventListener('shake', onShake, false);
   };
 
   var events = {
