@@ -37,7 +37,8 @@
     "eventemitter2": "~0.4.11",
     "pad": "0.0.4",
     "dateformat": "1.0.4-1.2.3",
-    "timeago": "0.1.0"
+    "timeago": "0.1.0",
+    "configgles": "0.0.8"
   },
   "devDependencies": {
     "grunt": "~0.3.17",

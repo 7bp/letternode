@@ -1,0 +1,40 @@
+# https://github.com/djvirgen/configgles
+
+base:
+  gameSpec:
+    matrix:
+      id: 5x5
+      rows: 5
+      columns_per_row: 5
+  server:
+    port: 8000
+  backend:
+    backdoor:
+      enabled: false
+    store_file_path: games.json
+    dictionary:
+      id: eowl
+      path: ./lib/dictionary/eowl
+      length: 1
+      #id: letterpress
+      #path: ./lib/dictionary/letterpress
+      #length: 2
+
+
+
+production:
+  _extends: base
+
+
+staging:
+  _extends: production
+  backend:
+    backdoor:
+      enabled: true
+
+
+development:
+  _extends: base
+  backend:
+    backdoor:
+      enabled: true

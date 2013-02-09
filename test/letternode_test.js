@@ -22,14 +22,26 @@ var letternode = require('../lib/letternode.js');
     test.ifError(value)
 */
 
-exports['buildUUID'] = {
+exports['Letternode'] = {
   setUp: function(done) {
-    // setup here
     done();
   },
-  'no args': function(test) {
-    //test.expect(1);
-    // tests here
+  'without configuration profile': function(test) {
+    var main = require('../lib/letternode.js');
+    main.configure();
+    test.ok(!main.backend, 'Backend SHOULD NOT be defined because no profile was selected.');
+    test.done();
+  },
+  'with configuration profile "development"': function(test) {
+    var main = require('../lib/letternode.js');
+    test.ok(main.configure('development'), 'Configure SHOULD return true.');
+    test.notEqual(typeof(main.backend), 'undefined', 'Backend SHOULD be defined because a profile was selected.');
+    test.done();
+  },
+  'with configuration profile "production"': function(test) {
+    var main = require('../lib/letternode.js');
+    test.ok(main.configure('production'), 'Configure SHOULD return true.');
+    test.notEqual(typeof(main.backend), 'undefined', 'Backend SHOULD be defined because a profile was selected.');
     test.done();
   }
 };
