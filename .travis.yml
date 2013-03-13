@@ -13,3 +13,7 @@ before_install:
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+notifications:
+  webhooks:
+    - http://some-other-webhook-you-need
+    - https://www.buildheroes.com/api/projects/6273fa77e155d17a761cd409270db2fcdf797b8f/builds
