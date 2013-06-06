@@ -6,7 +6,7 @@ Letternode is a game based on the idea of LetterPress for iOS but written in Nod
 Clone, check requirements with "npm install" and run the server by "node lib/server.js" or equivalent solutions e.g. using forever.
 
 ## Demo [![Build Status](https://secure.travis-ci.org/7bp/letternode.png?branch=demo)](http://travis-ci.org/7bp/letternode)
-http://bp.la/letternode
+~~http://bp.la/letternode~~
 
 ## Documentation
 https://github.com/7bp/letternode/wiki
